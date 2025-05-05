@@ -1,0 +1,211 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                       String   @id @default(cuid())
+  userId                   String
+  type                     String
+  provider                 String
+  providerAccountId        String
+  refresh_token            String?
+  refresh_token_expires_in Int?
+  access_token             String?
+  expires_at               Int?
+  token_type               String?
+  scope                    String?
+  id_token                 String?
+  session_state            String?
+  createdAt                DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  createdAt    DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  id         String   @id @default(cuid())
+  identifier String
+  token      String   @unique
+  createdAt  DateTime @default(now())
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// Day 1: User and Role models
+model User {
+  id                   String    @id @default(uuid())
+  email                String    @unique
+  passwordHash         String
+  name                 String?
+  firstName            String?
+  lastName             String?
+  phone                String?
+  invalidLoginAttempts Int       @default(0)
+  isMachine            Boolean   @default(false)
+  emailVerified        DateTime?
+  lockedAt             DateTime?
+  image                String?
+  token                String?
+
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  role          Role           @relation(fields: [roleId], references: [id])
+  roleId        String
+  wallet        Wallet?
+  childProfiles ChildProfile[]
+  accounts      Account[]
+  session       Session[]
+  canteen       Canteen?
+  transactions  Transaction[]
+  ApiKey        ApiKey[]
+}
+
+model Role {
+  id          String   @id @default(uuid())
+  name        String   @unique // 'PARENT', 'ADMIN', 'CANTEEN_MANAGER'
+  description String?
+  users       User[]
+  permissions String[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Day 2: Wallet and ChildProfile models
+model Wallet {
+  id           String        @id @default(uuid())
+  balance      Int           @default(0)
+  user         User          @relation(fields: [userId], references: [id])
+  userId       String        @unique
+  transactions Transaction[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model ChildProfile {
+  id           String        @id @default(uuid())
+  name         String
+  class        String?
+  parent       User          @relation(fields: [parentId], references: [id])
+  parentId     String
+  cardBalance  Int           @default(0)
+  isActive     Boolean       @default(true)
+  transactions Transaction[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+// Day 3: Canteen and Product models
+model Canteen {
+  id           String        @id @default(uuid())
+  name         String
+  manager      User          @relation(fields: [managerId], references: [id])
+  managerId    String        @unique
+  balance      Int           @default(0)
+  contactEmail String?
+  contactPhone String?
+  products     Product[]
+  transactions Transaction[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Product {
+  id           String        @id @default(uuid())
+  name         String
+  price        Int           @default(0)
+  description  String?
+  imageUrl     String?
+  canteen      Canteen       @relation(fields: [canteenId], references: [id])
+  canteenId    String
+  isAvailable  Boolean       @default(true)
+  transactions Transaction[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+// Day 4: Transaction and PaymentMethod models
+model Transaction {
+  id          String            @id @default(uuid())
+  amount      Int               @default(0)
+  type        TransactionType
+  status      TransactionStatus @default(COMPLETED)
+  description String?
+  reference   String?
+
+  // Relations - all optional depending on transaction type
+  user           User?         @relation(fields: [userId], references: [id])
+  userId         String?
+  wallet         Wallet?       @relation(fields: [walletId], references: [id])
+  walletId       String?
+  childProfile   ChildProfile? @relation(fields: [childProfileId], references: [id])
+  childProfileId String?
+  canteen        Canteen?      @relation(fields: [canteenId], references: [id])
+  canteenId      String?
+  product        Product?      @relation(fields: [productId], references: [id])
+  productId      String?
+
+  paymentMethod   PaymentMethod? @relation(fields: [paymentMethodId], references: [id])
+  paymentMethodId String?
+
+  externalReference String? // Stripe payment ID or similar
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model PaymentMethod {
+  id           String        @id @default(uuid())
+  type         String // STRIPE, BANK_TRANSFER, etc.
+  name         String? // User-friendly name
+  details      Json? // Encrypted payment details
+  isDefault    Boolean       @default(false)
+  transactions Transaction[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model ApiKey {
+  id        String   @id @default(cuid())
+  userId    String
+  key       String   @unique
+  name      String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+// Enums for Transaction types and statuses
+enum TransactionType {
+  DEPOSIT
+  WITHDRAWAL
+  TRANSFER_TO_CHILD
+  PURCHASE
+  REFUND
+  FEE
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+  CANCELLED
+}

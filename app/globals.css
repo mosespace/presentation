@@ -1,0 +1,232 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Grotesk:wght@300..700&display=swap');
+
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+
+/* #f6416c */
+/* :root {
+  --app-font: 'Space Grotesk', serif;
+  --sidebar: hsl(0 0% 98%);
+  --sidebar-foreground: hsl(240 5.3% 26.1%);
+  --sidebar-primary: hsl(240 5.9% 10%);
+  --sidebar-primary-foreground: hsl(0 0% 98%);
+  --sidebar-accent: hsl(240 4.8% 95.9%);
+  --sidebar-accent-foreground: hsl(240 5.9% 10%);
+  --sidebar-border: hsl(220 13% 91%);
+  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+} */
+
+body {
+  font-family: var(--app-font) !important;
+}
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --app-font: 'Space Grotesk', serif;
+
+  --background: hsl(0 0% 100%);
+  --foreground: hsl(344.21 61.29% 6.08%);
+
+  --primary: hsl(345.75 90.95% 60.98%);
+  --primary-foreground: hsl(346.67 90% 96.08%);
+
+  --card: hsl(346.67 100% 98.24%);
+  --card-foreground: hsl(344.21 61.29% 6.08%);
+
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(344.21 61.29% 6.08%);
+
+  --secondary: hsl(346.67 93.1% 94.31%);
+  --secondary-foreground: hsl(0 0% 0%);
+
+  --muted: hsl(346.67 90% 96.08%);
+  --muted-foreground: hsl(0 0% 40%);
+
+  --accent: hsl(346.67 90% 96.08%);
+  --accent-foreground: hsl(346.67 57.45% 9.22%);
+
+  --destructive: hsl(0 84.24% 60.2%);
+  --destructive-foreground: hsl(210 40% 98.04%);
+
+  --border: hsl(345 90% 92.16%);
+
+  --input: hsl(344.35 25.84% 82.55%);
+
+  --ring: hsl(345.75 90.95% 60.98%);
+
+  --chart-1: hsl(345.75 90.95% 60.98%);
+  --chart-2: hsl(345.88 90.53% 66.86%);
+  --chart-3: hsl(346.15 90.7% 74.71%);
+  --chart-4: hsl(346.06 90.83% 78.63%);
+  --chart-5: hsl(345.93 91.01% 82.55%);
+
+  --sidebar: hsl(345 100% 99.22%);
+  --sidebar-foreground: hsl(344.21 61.29% 6.08%);
+  --sidebar-primary: hsl(345.75 90.95% 60.98%);
+  --sidebar-primary-foreground: hsl(346.67 90% 96.08%);
+  --sidebar-accent: hsl(345.75 90.95% 60.98%);
+  --sidebar-accent-foreground: hsl(346.67 90% 96.08%);
+  --sidebar-border: hsl(345 90% 92.16%);
+  --sidebar-ring: hsl(345.75 90.95% 60.98%);
+
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: hsl(0 0% 0%);
+  --foreground: hsl(346.67 93.1% 94.31%);
+
+  --primary: hsl(345.75 90.95% 60.98%);
+  --primary-foreground: hsl(346.67 90% 96.08%);
+
+  --card: hsl(342.86 22.58% 6.08%);
+  --card-foreground: hsl(346.67 93.1% 94.31%);
+
+  --popover: hsl(0 0% 0%);
+  --popover-foreground: hsl(346.67 93.1% 94.31%);
+
+  --secondary: hsl(345.71 57.8% 21.37%);
+  --secondary-foreground: hsl(0 0% 100%);
+
+  --muted: hsl(0 0% 9.8%);
+  --muted-foreground: hsl(0 0% 50.2%);
+
+  --accent: hsl(345.71 57.8% 21.37%);
+  --accent-foreground: hsl(346.67 93.1% 94.31%);
+
+  --destructive: hsl(0 84.24% 60.2%);
+  --destructive-foreground: hsl(210 40% 98.04%);
+
+  --border: hsl(345 58.06% 12.16%);
+
+  --input: hsl(346.67 16.67% 21.18%);
+
+  --ring: hsl(345.75 90.95% 60.98%);
+
+  --chart-1: hsl(345.75 90.95% 60.98%);
+  --chart-2: hsl(345.58 62.6% 51.76%);
+  --chart-3: hsl(345.76 58.42% 39.61%);
+  --chart-4: hsl(346.06 57.89% 33.53%);
+  --chart-5: hsl(345.37 58.57% 27.45%);
+
+  --sidebar: hsl(345 11.11% 7.06%);
+  --sidebar-foreground: hsl(346.67 93.1% 94.31%);
+  --sidebar-primary: hsl(345.75 90.95% 60.98%);
+  --sidebar-primary-foreground: hsl(346.67 90% 96.08%);
+  --sidebar-accent: hsl(345.75 90.95% 60.98%);
+  --sidebar-accent-foreground: hsl(346.67 90% 96.08%);
+  --sidebar-border: hsl(345 58.06% 12.16%);
+  --sidebar-ring: hsl(345.75 90.95% 60.98%);
+
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* From Uiverse.io by Fadhilmagass */
+.btn-loader {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  height: 100%;
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 6px;
+  border-radius: 50%;
+  -webkit-animation: dot-pulse2 1.5s ease-in-out infinite;
+  animation: dot-pulse2 1.5s ease-in-out infinite;
+}
+
+.dot-1 {
+  -webkit-animation-delay: 0s;
+  animation-delay: 0s;
+}
+
+.dot-2 {
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s;
+}
+
+.dot-3 {
+  -webkit-animation-delay: 0.6s;
+  animation-delay: 0.6s;
+}
+
+@keyframes dot-pulse2 {
+  0% {
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+    opacity: 0.5;
+  }
+
+  50% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+    opacity: 0.5;
+  }
+}

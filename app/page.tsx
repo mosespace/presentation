@@ -845,6 +845,30 @@ export default function LMISProposal() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <Card className="overflow-hidden">
               <div className="bg-primary/10 p-4 border-b">
+                <h3 className="font-semibold">Medical Application</h3>
+                <p className="text-sm text-gray-600">
+                  January 2024 – March 2024
+                </p>
+              </div>
+              <CardContent className="p-4">
+                <p className="text-sm mb-3">
+                  A powerfull Development and implementation of a medical
+                  application system connecting central and regional hospitals.
+                </p>
+                <h4 className="font-medium text-sm mb-2">Key Achievements:</h4>
+                <ul className="space-y-1 text-sm">
+                  <li>• Connected the hospital, pharmacy and the patients</li>
+                  <li>• Reduced test turnaround time by 42%</li>
+                  <li>• Implemented automated quality control monitoring</li>
+                  <li>
+                    • Medical department showcase with specialist profiles
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            <Card className="overflow-hidden">
+              <div className="bg-primary/10 p-4 border-b">
                 <h3 className="font-semibold">
                   Logistics Shipment Tracking System
                 </h3>

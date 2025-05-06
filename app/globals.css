@@ -3,7 +3,6 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
-
 /* #f6416c */
 /* :root {
   --app-font: 'Space Grotesk', serif;
@@ -17,9 +16,9 @@
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
 } */
 
-body {
-  font-family: var(--app-font) !important;
-}
+/* body { */
+/* font-family: var(--app-font) !important; */
+/* } */
 
 @custom-variant dark (&:is(.dark *));
 
